@@ -9,7 +9,7 @@ namespace Demo2Mvc.Models
 {
     public class DemoDbContext:DbContext
     {
-        public DemoDbContext():base("Server=SWAGATS8;Initial Catalog=MindfireDB;Integrated Security = SSPI;")
+        public DemoDbContext():base()
         {
 
         }

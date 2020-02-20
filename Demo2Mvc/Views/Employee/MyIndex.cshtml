@@ -1,1 +1,23 @@
-﻿<h4>Hello World</h4>
+﻿@model IEnumerable<Demo2Mvc.Models.Employee>
+
+<table border="1">
+    <thead>
+        <tr>
+            <td>EmpId</td>
+            <td>Name</td>
+            <td>Age</td>
+            <td>EmailAddress</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var emp in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(x => emp.EmployeeId)</td>
+                <td>@Html.DisplayFor(x => emp.Name)</td>
+                <td>@Html.DisplayFor(x => emp.Age)</td>
+                <td>@Html.DisplayFor(x => emp.EmailAddress)</td>
+            </tr>
+        }
+    </tbody>
+</table>

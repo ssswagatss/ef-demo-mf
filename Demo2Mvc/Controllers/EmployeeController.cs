@@ -15,7 +15,7 @@ namespace Demo2Mvc.Controllers
             DemoDbContext db = new DemoDbContext();
             var users = db.Employees.ToList();
 
-            return View("~/Views/Employee/MyIndex.cshtml");
+            return View("~/Views/Employee/MyIndex.cshtml",users);
         }
         public ActionResult Contact()
         {
