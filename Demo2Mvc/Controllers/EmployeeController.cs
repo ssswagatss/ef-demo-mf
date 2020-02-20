@@ -12,14 +12,8 @@ namespace Demo2Mvc.Controllers
         // GET: Employee
         public ActionResult Index()
         {
-            var data = new DemoModel() { Message= "Hello World from Index page DATA 1" ,EmpId=22};
-            var data2 = new DemoModel() { Message= "Hello World from Index page DATA 2" ,EmpId=23};
-
-            var bar = new List<DemoModel>();
-            bar.Add(data);
-            bar.Add(data2);
-
-            ViewBag.Data = bar;
+            DemoDbContext db = new DemoDbContext();
+            var users = db.Employees.ToList();
 
             return View("~/Views/Employee/MyIndex.cshtml");
         }
