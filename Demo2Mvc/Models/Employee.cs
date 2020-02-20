@@ -12,10 +12,10 @@ namespace Demo2Mvc.Models
         //[Key]
         public int EmployeeId { get; set; }
 
-        //[MaxLength(50)]
+        [MaxLength(50)]
         public string Name { get; set; }
-        //[MaxLength(50)]
-        //[Required]
+        [MaxLength(50)]
+        [Required]
         public string EmailAddress { get; set; }
         public int? Age { get; set; }
     }
