@@ -1,0 +1,11 @@
+﻿@{
+    List<Demo2Mvc.Models.DemoModel> data = ViewBag.Data;
+}
+
+@foreach (var item in data)
+{
+    <p>@item.Message</p>
+    <p>@item.EmpId</p>
+
+    <input type="text" name="employeeId" value="@item.EmpId" />
+}
