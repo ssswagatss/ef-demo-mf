@@ -1,4 +1,5 @@
 ﻿using Demo2Mvc.Models;
+using Demo2Mvc.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,18 @@ namespace Demo2Mvc.Controllers
         {
             var data = new DemoModel() { Message = "Hello World from Contact page", EmpId = 22 };
             return View("~/Views/Employee/MyIndex.cshtml",data);
+        }
+
+        //[HttpPost]
+        public ActionResult AddEmployee()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SaveNewEmployee(AddEmpVM model)
+        {
+            return View("~/Views/Employee/AddEmpployee");
         }
     }
 }

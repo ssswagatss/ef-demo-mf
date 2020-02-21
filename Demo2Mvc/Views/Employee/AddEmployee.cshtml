@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "AddEmployee";
+}
+
+<h2>AddEmployee Form</h2>
+<form action="/Employee/SaveNewEmployee" method="post">
+    <input type="text" name="employeeName" id="empName" value="" />
+    <input type="text" name="emailAddress" id="emailId" value="" />
+    <button type="submit">Go To Save New Post</button>
+</form>
+
+
+@using (Html.BeginForm("SaveNewEmployee", "Employee", FormMethod.Get))
+{
+
+    @Html.TextBox("employeeName")
+    @Html.TextBox("emailAddress")
+    <button type="submit">Go To Save New Post</button>
+}
+
+@*@Html.ActionLink("Go To Save New", "SaveNewEmployee","Employee")*@
