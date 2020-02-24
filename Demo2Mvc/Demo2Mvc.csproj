@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DemoController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -129,6 +130,7 @@
     <Compile Include="Models\DemoModel.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\ViewModels\AddEmpVM.cs" />
+    <Compile Include="Models\ViewModels\DemoVm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +144,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Employee\AddEmployee.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Demo\Abc.cshtml" />
+    <Content Include="Views\Demo\Xyz.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
