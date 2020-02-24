@@ -23,19 +23,19 @@
                 {
                     Age = 21,
                     EmailAddress = "swagat@gmail.com",
-                    Name = "Swagat Swain"
+                    FullName = "Swagat Swain"
                 });
                 context.Employees.Add(new Models.Employee
                 {
                     Age = 22,
                     EmailAddress = "rohit@gmail.com",
-                    Name = "Rohit"
+                    FullName = "Rohit"
                 });
                 context.Employees.Add(new Models.Employee
                 {
                     Age = 12,
                     EmailAddress = "rahul@gmail.com",
-                    Name = "Rahul"
+                    FullName = "Rahul"
                 });
                 context.SaveChanges();
             }

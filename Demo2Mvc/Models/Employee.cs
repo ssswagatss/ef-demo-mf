@@ -14,7 +14,8 @@ namespace Demo2Mvc.Models
 
         [MaxLength(50)]
         [Required]
-        public string Name { get; set; }
+        public string FullName { get; set; }
+
         [MaxLength(50)]
         [Required]
         public string EmailAddress { get; set; }
