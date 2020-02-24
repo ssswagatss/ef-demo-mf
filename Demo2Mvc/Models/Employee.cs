@@ -13,6 +13,7 @@ namespace Demo2Mvc.Models
         public int EmployeeId { get; set; }
 
         [MaxLength(50)]
+        [Required]
         public string Name { get; set; }
         [MaxLength(50)]
         [Required]
