@@ -133,9 +133,14 @@
     <Compile Include="Migrations\202002240914533_RenameName.designer.cs">
       <DependentUpon>202002240914533_RenameName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002260934366_AddsDeptClass_Migration.cs" />
+    <Compile Include="Migrations\202002260934366_AddsDeptClass_Migration.designer.cs">
+      <DependentUpon>202002260934366_AddsDeptClass_Migration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DemoDbContext.cs" />
     <Compile Include="Models\DemoModel.cs" />
+    <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\ViewModels\AddEmpVM.cs" />
     <Compile Include="Models\ViewModels\DemoVm.cs" />
@@ -176,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002240914533_RenameName.resx">
       <DependentUpon>202002240914533_RenameName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002260934366_AddsDeptClass_Migration.resx">
+      <DependentUpon>202002260934366_AddsDeptClass_Migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

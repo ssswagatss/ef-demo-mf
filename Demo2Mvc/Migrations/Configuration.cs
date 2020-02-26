@@ -39,6 +39,20 @@
                 });
                 context.SaveChanges();
             }
+
+            if (!context.Departments.Any())
+            {
+                context.Departments.Add(new Models.Department {
+                    DepartmentName="HR",
+                    Location="BBSR"
+                });
+                context.Departments.Add(new Models.Department
+                {
+                    DepartmentName = "Admin",
+                    Location = "CTC"
+                });
+                context.SaveChanges();
+            }
         }
     }
 }
