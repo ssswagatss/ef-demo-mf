@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Demo2Mvc.Models.Employee>
+﻿@model IEnumerable<Demo2Mvc.Models.ViewModels.EmployeeDepartment>
 
 <table border="1">
     <thead>
@@ -7,17 +7,21 @@
             <td>Name</td>
             <td>Age</td>
             <td>EmailAddress</td>
+            <td>DeptName</td>
+            <td>Location</td>
         </tr>
     </thead>
     <tbody>
         @foreach (var emp in Model)
         {
-            <tr>
-                <td>@Html.DisplayFor(x => emp.EmployeeId)</td>
-                <td>@Html.DisplayFor(x => emp.Name)</td>
-                <td>@Html.DisplayFor(x => emp.Age)</td>
-                <td>@Html.DisplayFor(x => emp.EmailAddress)</td>
-            </tr>
+        <tr>
+            <td>@Html.DisplayFor(x => emp.EmployeeId)</td>
+            <td>@Html.DisplayFor(x => emp.FullName)</td>
+            <td>@Html.DisplayFor(x => emp.Age)</td>
+            <td>@Html.DisplayFor(x => emp.EmailAddress)</td>
+            <td>@Html.DisplayFor(x => emp.DepartmentName)</td>
+            <td>@Html.DisplayFor(x => emp.Location)</td>
+        </tr>
         }
     </tbody>
 </table>
