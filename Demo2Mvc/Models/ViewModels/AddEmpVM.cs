@@ -10,5 +10,7 @@ namespace Demo2Mvc.Models.ViewModels
     {
         public string EmployeeName { get; set; }
         public string EmailAddress { get; set; }
+        public int Age { get; set; }
+        public int DepartmentId { get; set; }
     }
 }

@@ -1,24 +1,83 @@
-﻿
-<table class="table table-striped" id="employeeTable">
-    <thead>
-        <tr>
-            <th>EmpId</th>
-            <th>Name</th>
-            <th>Age</th>
-            <th>EmailAddress</th>
-            <th>DeptName</th>
-            <th>Location</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+﻿@{
+    List<Demo2Mvc.Models.Department> depts = ViewBag.Departments;
+}
+<button class="btn btn-default btn-primary pull-right" data-toggle="modal" data-target="#employeeFormModal">Create New</button>
+
+<div class="table-responsive">
+    <table class="table table-striped" id="employeeTable">
+        <thead>
+            <tr>
+                <th>EmpId</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>EmailAddress</th>
+                <th>DeptName</th>
+                <th>Location</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<div id="employeeFormModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">ADD EMPLOYEE</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form>
+                            <div class="form-group">
+                                <label>Name:</label>
+                                <input type="text" class="form-control" name="fullName">
+                            </div>
+                            <div class="form-group">
+                                <label>Age:</label>
+                                <input type="text" class="form-control" name="age">
+                            </div>
+                            <div class="form-group">
+                                <label>Email:</label>
+                                <input type="email" class="form-control" name="emailAddress">
+                            </div>
+                            <div class="form-group">
+                                <label>Department:</label>
+                                <select class="form-control" name="departmentId">
+                                    <option value="">Select</option>
+                                    @foreach (var d in depts)
+                                    {
+                                        <option value="@d.DepartmentId">@d.DepartmentName</option>
+                                    }
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success js-add-new-employee">Save </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+
+    </div>
+</div>
 
 
 @section scripts{
     <script>
         $(document).ready(function () {
-           var $empDataTable = $('#employeeTable').DataTable({
+            var $empDataTable = $('#employeeTable').DataTable({
                 ajax: {
                     url: 'Employee/GetEmployees',
                     dataSrc:
@@ -43,43 +102,49 @@
                     }, {
                         "data": null,
                         "render": function (data, type, full) {
-                            return "<button class='btn btn-xs btn-info js-edit-employee' data-employee-id="+full.EmployeeId+">Edit</button>" + 
-                                "<button class='btn btn-xs btn-danger js-delete-employee' data-employee-id=" + full.EmployeeId +">Delete</button>" 
+                            return "<button class='btn btn-xs btn-info js-edit-employee' data-employee-id=" + full.EmployeeId + ">Edit</button>" +
+                                "<button class='btn btn-xs btn-danger js-delete-employee' data-employee-id=" + full.EmployeeId + ">Delete</button>"
 
                         }
                     }
                 ]
             });
-            //$('.js-save-data').on('click', function (e) {
-            //    e.preventDefault();
-            //    var formData = {
-            //        name: $('input[name="name"]').val(),
-            //        phoneNumbers: []
-            //    };
 
-            //    $('input[name="phoneNumber"]').each(function (i,el) {
-            //        formData.phoneNumbers.push($(el).val());
-            //    });
-
-            //    $.ajax({
-            //        url: "Employee/SaveCustomEmployee",
-            //        method: "POST",
-            //        data: formData,
-            //        success: function (result) {
-            //            console.log(result);
-            //            $button.parents('tr').remove();
-            //            alert(result);
-            //        },
-            //        error: function (error) {
-            //            console.log(error);
-            //            alert("Sorry ! Unable to delete employee");
-            //        }
-            //    });
-
-            //});
+            $('#employeeFormModal').on('hidden.bs.modal', function () {
+                console.log("modal Hidden!");
+                $('input,select').val('');
+            });
 
 
-            $('body').on('click','.js-delete-employee', function (e) {
+
+            $('body').on('click', '.js-add-new-employee', function (e) {
+                e.preventDefault();
+                var formData = {
+                    "EmployeeName": $('input[name="fullName"]').val(),
+                    "EmailAddress": $('input[name="emailAddress"]').val(),
+                    'Age': $('input[name="age"]').val(),
+                    "DepartmentId": $('select[name="departmentId"]').val()
+                };
+                $.ajax({
+                    url: "Employee/SaveNewEmployee",
+                    method: "POST",
+                    data: formData,
+                    success: function (result) {
+                        console.log(result);
+                        //alert("Added");
+                        $('#employeeFormModal').modal('hide');
+                        $empDataTable.ajax.reload();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert("Sorry ! Unable to delete employee");
+                    }
+                });
+
+            });
+
+
+            $('body').on('click', '.js-delete-employee', function (e) {
                 e.preventDefault();
                 var $button = $(this);
 

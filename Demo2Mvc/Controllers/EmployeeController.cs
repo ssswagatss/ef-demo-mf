@@ -2,6 +2,7 @@
 using Demo2Mvc.Models.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace Demo2Mvc.Controllers
@@ -11,7 +12,7 @@ namespace Demo2Mvc.Controllers
         // GET: Employee
         public ActionResult Index()
         {
-            //DemoDbContext db = new DemoDbContext();
+            DemoDbContext db = new DemoDbContext();
 
             //var data = (from user in db.Employees.Include("Department").ToList()
             //            select new EmployeeDepartment
@@ -24,7 +25,8 @@ namespace Demo2Mvc.Controllers
             //                Location = user.Department?.Location??"N/A"
             //            }).ToList();
 
-
+            var departments = db.Departments.ToList();
+            ViewBag.Departments = departments;
             return View("~/Views/Employee/MyIndex.cshtml");
         }
 
@@ -58,7 +60,17 @@ namespace Demo2Mvc.Controllers
         [HttpPost]
         public ActionResult SaveNewEmployee(AddEmpVM model)
         {
-            return View("~/Views/Employee/AddEmpployee");
+            DemoDbContext db = new DemoDbContext();
+            var emp = new Employee()
+            {
+                FullName = model.EmployeeName,
+                EmailAddress = model.EmailAddress,
+                Age = model.Age,
+                DepartmentId = model.DepartmentId
+            };
+            db.Employees.Add(emp);
+            db.SaveChanges();
+            return Json("Success");
         }
 
         [HttpPost]
