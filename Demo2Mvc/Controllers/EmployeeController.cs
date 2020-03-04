@@ -44,5 +44,25 @@ namespace Demo2Mvc.Controllers
         {
             return View("~/Views/Employee/AddEmpployee");
         }
+
+        [HttpPost]
+        public ActionResult DeleteEmployee(int employeeId)
+        {
+            //Logic to delete employee
+            //return Json("Successfully Deleted");
+            return HttpNotFound();
+
+        }
+
+        [HttpPost]
+        public ActionResult SaveCustomEmployee(EditCustomEmployeeViewModel model)
+        {
+            //Save your data
+            return Json(new
+            {
+                Id = 23,
+                Name = model.Name
+            });
+        }
     }
 }

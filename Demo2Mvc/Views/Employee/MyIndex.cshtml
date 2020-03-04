@@ -1,27 +1,90 @@
 ﻿@model IEnumerable<Demo2Mvc.Models.ViewModels.EmployeeDepartment>
 
-<table border="1">
+<table class="table table-striped" id="employeeTable">
     <thead>
         <tr>
-            <td>EmpId</td>
-            <td>Name</td>
-            <td>Age</td>
-            <td>EmailAddress</td>
-            <td>DeptName</td>
-            <td>Location</td>
+            <th>EmpId</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>EmailAddress</th>
+            <th>DeptName</th>
+            <th>Location</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var emp in Model)
         {
-        <tr>
-            <td>@Html.DisplayFor(x => emp.EmployeeId)</td>
-            <td>@Html.DisplayFor(x => emp.FullName)</td>
-            <td>@Html.DisplayFor(x => emp.Age)</td>
-            <td>@Html.DisplayFor(x => emp.EmailAddress)</td>
-            <td>@Html.DisplayFor(x => emp.DepartmentName)</td>
-            <td>@Html.DisplayFor(x => emp.Location)</td>
-        </tr>
+            <tr>
+                <td>@Html.DisplayFor(x => emp.EmployeeId)</td>
+                <td>@Html.DisplayFor(x => emp.FullName)</td>
+                <td>@Html.DisplayFor(x => emp.Age)</td>
+                <td>@Html.DisplayFor(x => emp.EmailAddress)</td>
+                <td>@Html.DisplayFor(x => emp.DepartmentName)</td>
+                <td>@Html.DisplayFor(x => emp.Location)</td>
+                <td>
+                    <button type="button" class="js-delete-employee btn btn-xs btn-danger" data-employee-id="@emp.EmployeeId">Delete</button>
+                <button type="button" class="js-edit-employee btn btn-xs btn-info" data-employee-id="@emp.EmployeeId">Edit</button>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#employeeTable').DataTable();
+            //$('.js-save-data').on('click', function (e) {
+            //    e.preventDefault();
+            //    var formData = {
+            //        name: $('input[name="name"]').val(),
+            //        phoneNumbers: []
+            //    };
+
+            //    $('input[name="phoneNumber"]').each(function (i,el) {
+            //        formData.phoneNumbers.push($(el).val());
+            //    });
+
+            //    $.ajax({
+            //        url: "Employee/SaveCustomEmployee",
+            //        method: "POST",
+            //        data: formData,
+            //        success: function (result) {
+            //            console.log(result);
+            //            $button.parents('tr').remove();
+            //            alert(result);
+            //        },
+            //        error: function (error) {
+            //            console.log(error);
+            //            alert("Sorry ! Unable to delete employee");
+            //        }
+            //    });
+
+            //});
+
+
+            //$('.js-delete-employee').on('click', function (e) {
+            //    e.preventDefault();
+            //    var $button = $(this);
+
+            //    var employeeId = $button.data("employee-id");
+            //    $.ajax({
+            //        url: "Employee/DeleteEmployee",
+            //        method: "POST",
+            //        data: { employeeId: employeeId },
+            //        success: function (result) {
+            //            console.log(result);
+            //            $button.parents('tr').remove();
+            //            alert(result);
+            //        },
+            //        error: function (error) {
+            //            console.log(error);
+            //            alert("Sorry ! Unable to delete employee");
+            //        }
+            //    });
+            //});
+        });
+    </script>
+}
