@@ -1,8 +1,6 @@
 ﻿using Demo2Mvc.Models;
 using Demo2Mvc.Models.ViewModels;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace Demo2Mvc.Controllers
@@ -45,6 +43,23 @@ namespace Demo2Mvc.Controllers
                         }).ToList();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetEmployeesById(int id)
+        {
+            DemoDbContext db = new DemoDbContext();
+            var user = db.Employees.Include("Department").FirstOrDefault(x => x.EmployeeId == id);
+            var emp = new EmployeeDepartment
+            {
+                EmployeeId = user.EmployeeId,
+                Age = user.Age,
+                EmailAddress = user.EmailAddress,
+                FullName = user.FullName,
+                DepartmentName = user.Department?.DepartmentName ?? "N/A",
+                Location = user.Department?.Location ?? "N/A",
+                DepartmentId = user.DepartmentId
+            };
+            return Json(emp, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Contact()
         {
             var data = new DemoModel() { Message = "Hello World from Contact page", EmpId = 22 };
@@ -72,14 +87,28 @@ namespace Demo2Mvc.Controllers
             db.SaveChanges();
             return Json("Success");
         }
+        [HttpPost]
+        public ActionResult UpdateEmployee(int employeeId, AddEmpVM model)
+        {
+            DemoDbContext db = new DemoDbContext();
+            var employee = db.Employees.FirstOrDefault(x => x.EmployeeId == employeeId);
 
+            employee.FullName = model.EmployeeName;
+            employee.EmailAddress = model.EmailAddress;
+            employee.Age = model.Age; ;
+            employee.DepartmentId = model.DepartmentId;
+
+            db.Entry(employee).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return Json("Success");
+        }
         [HttpPost]
         public ActionResult DeleteEmployee(int employeeId)
         {
             //Logic to delete employee
             DemoDbContext db = new DemoDbContext();
             var emp = db.Employees.FirstOrDefault(x => x.EmployeeId == employeeId);
-            if(emp!=null)
+            if (emp != null)
             {
                 db.Employees.Remove(emp);
                 db.SaveChanges();

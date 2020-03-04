@@ -14,5 +14,6 @@ namespace Demo2Mvc.Models.ViewModels
         public int? Age { get; set; }
         public string DepartmentName { get; set; }
         public string Location { get; set; }
+        public int? DepartmentId { get; set; }
     }
 }

@@ -32,6 +32,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <form>
+                            <input type="hidden" name="employeeId" value="" />
                             <div class="form-group">
                                 <label>Name:</label>
                                 <input type="text" class="form-control" name="fullName">
@@ -113,20 +114,51 @@
             $('#employeeFormModal').on('hidden.bs.modal', function () {
                 console.log("modal Hidden!");
                 $('input,select').val('');
+                $('#employeeFormModal').find('.modal-title').html('ADD EMPLOYEE');
             });
 
+            $('body').on('click', '.js-edit-employee', function (e) {
+                e.preventDefault();
+                var $button = $(this);
 
+                var employeeId = $button.data("employee-id");
+                $.ajax({
+                    url: "Employee/GetEmployeesById/" + employeeId,
+                    method: "GET",
+                    success: function (result) {
+                        console.log(result);
+                        $('input[name="fullName"]').val(result.FullName);
+                        $('input[name="emailAddress"]').val(result.EmailAddress);
+                        $('input[name="age"]').val(result.Age);
+                        $('select[name="departmentId"]').val(result.DepartmentId);
+                        $('input[name="employeeId"]').val(result.EmployeeId);
+                        $('#employeeFormModal').find('.modal-title').html('UPDATE EMPLOYEE');
+                        $('#employeeFormModal').modal('show');
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert("Sorry ! Unable to edit employee");
+                    }
+                });
+            });
 
             $('body').on('click', '.js-add-new-employee', function (e) {
                 e.preventDefault();
+                var url = "";
+                if ($('input[name="employeeId"]').val())
+                    url = "Employee/UpdateEmployee";
+                else
+                    url = "Employee/SaveNewEmployee";
+
                 var formData = {
                     "EmployeeName": $('input[name="fullName"]').val(),
                     "EmailAddress": $('input[name="emailAddress"]').val(),
                     'Age': $('input[name="age"]').val(),
-                    "DepartmentId": $('select[name="departmentId"]').val()
+                    "DepartmentId": $('select[name="departmentId"]').val(),
+                    "EmployeeId": $('input[name="employeeId"]').val()
                 };
                 $.ajax({
-                    url: "Employee/SaveNewEmployee",
+                    url: url,
                     method: "POST",
                     data: formData,
                     success: function (result) {
