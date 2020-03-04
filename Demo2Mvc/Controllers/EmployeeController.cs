@@ -11,8 +11,26 @@ namespace Demo2Mvc.Controllers
         // GET: Employee
         public ActionResult Index()
         {
-            DemoDbContext db = new DemoDbContext();
+            //DemoDbContext db = new DemoDbContext();
 
+            //var data = (from user in db.Employees.Include("Department").ToList()
+            //            select new EmployeeDepartment
+            //            {
+            //                EmployeeId = user.EmployeeId,
+            //                Age = user.Age,
+            //                EmailAddress = user.EmailAddress,
+            //                FullName = user.FullName,
+            //                DepartmentName = user.Department?.DepartmentName ?? "N/A",
+            //                Location = user.Department?.Location??"N/A"
+            //            }).ToList();
+
+
+            return View("~/Views/Employee/MyIndex.cshtml");
+        }
+
+        public ActionResult GetEmployees()
+        {
+            DemoDbContext db = new DemoDbContext();
             var data = (from user in db.Employees.Include("Department").ToList()
                         select new EmployeeDepartment
                         {
@@ -21,11 +39,9 @@ namespace Demo2Mvc.Controllers
                             EmailAddress = user.EmailAddress,
                             FullName = user.FullName,
                             DepartmentName = user.Department?.DepartmentName ?? "N/A",
-                            Location = user.Department?.Location??"N/A"
+                            Location = user.Department?.Location ?? "N/A"
                         }).ToList();
-
-
-            return View("~/Views/Employee/MyIndex.cshtml", data);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Contact()
         {
@@ -49,8 +65,18 @@ namespace Demo2Mvc.Controllers
         public ActionResult DeleteEmployee(int employeeId)
         {
             //Logic to delete employee
-            //return Json("Successfully Deleted");
-            return HttpNotFound();
+            DemoDbContext db = new DemoDbContext();
+            var emp = db.Employees.FirstOrDefault(x => x.EmployeeId == employeeId);
+            if(emp!=null)
+            {
+                db.Employees.Remove(emp);
+                db.SaveChanges();
+                return Json("Successfully Deleted");
+            }
+            else
+            {
+                return HttpNotFound();
+            }
 
         }
 

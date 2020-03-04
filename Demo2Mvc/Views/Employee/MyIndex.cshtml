@@ -1,5 +1,4 @@
-﻿@model IEnumerable<Demo2Mvc.Models.ViewModels.EmployeeDepartment>
-
+﻿
 <table class="table table-striped" id="employeeTable">
     <thead>
         <tr>
@@ -12,30 +11,45 @@
             <th>Action</th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var emp in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(x => emp.EmployeeId)</td>
-                <td>@Html.DisplayFor(x => emp.FullName)</td>
-                <td>@Html.DisplayFor(x => emp.Age)</td>
-                <td>@Html.DisplayFor(x => emp.EmailAddress)</td>
-                <td>@Html.DisplayFor(x => emp.DepartmentName)</td>
-                <td>@Html.DisplayFor(x => emp.Location)</td>
-                <td>
-                    <button type="button" class="js-delete-employee btn btn-xs btn-danger" data-employee-id="@emp.EmployeeId">Delete</button>
-                <button type="button" class="js-edit-employee btn btn-xs btn-info" data-employee-id="@emp.EmployeeId">Edit</button>
-                </td>
-            </tr>
-        }
-    </tbody>
+    <tbody></tbody>
 </table>
 
 
 @section scripts{
     <script>
         $(document).ready(function () {
-            $('#employeeTable').DataTable();
+           var $empDataTable = $('#employeeTable').DataTable({
+                ajax: {
+                    url: 'Employee/GetEmployees',
+                    dataSrc:
+                        function (data) {
+                            return data;
+                        }
+                },
+                columns: [
+                    {
+                        "data": "EmployeeId"
+                    },
+                    {
+                        "data": "FullName"
+                    }, {
+                        "data": "Age"
+                    }, {
+                        "data": "EmailAddress"
+                    }, {
+                        "data": "DepartmentName"
+                    }, {
+                        "data": "Location"
+                    }, {
+                        "data": null,
+                        "render": function (data, type, full) {
+                            return "<button class='btn btn-xs btn-info js-edit-employee' data-employee-id="+full.EmployeeId+">Edit</button>" + 
+                                "<button class='btn btn-xs btn-danger js-delete-employee' data-employee-id=" + full.EmployeeId +">Delete</button>" 
+
+                        }
+                    }
+                ]
+            });
             //$('.js-save-data').on('click', function (e) {
             //    e.preventDefault();
             //    var formData = {
@@ -65,26 +79,27 @@
             //});
 
 
-            //$('.js-delete-employee').on('click', function (e) {
-            //    e.preventDefault();
-            //    var $button = $(this);
+            $('body').on('click','.js-delete-employee', function (e) {
+                e.preventDefault();
+                var $button = $(this);
 
-            //    var employeeId = $button.data("employee-id");
-            //    $.ajax({
-            //        url: "Employee/DeleteEmployee",
-            //        method: "POST",
-            //        data: { employeeId: employeeId },
-            //        success: function (result) {
-            //            console.log(result);
-            //            $button.parents('tr').remove();
-            //            alert(result);
-            //        },
-            //        error: function (error) {
-            //            console.log(error);
-            //            alert("Sorry ! Unable to delete employee");
-            //        }
-            //    });
-            //});
+                var employeeId = $button.data("employee-id");
+                $.ajax({
+                    url: "Employee/DeleteEmployee",
+                    method: "POST",
+                    data: { employeeId: employeeId },
+                    success: function (result) {
+                        console.log(result);
+                        //$button.parents('tr').remove();
+                        alert(result);
+                        $empDataTable.ajax.reload();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert("Sorry ! Unable to delete employee");
+                    }
+                });
+            });
         });
     </script>
 }
