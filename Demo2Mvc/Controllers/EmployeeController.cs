@@ -11,7 +11,7 @@ namespace Demo2Mvc.Controllers
         {
             DemoDbContext db = new DemoDbContext();
             var employees = (from e in db.Employees.Include("Department").Include("Languages")
-                                                    .Where(x=>x.Languages.Any()).ToList()
+                                                    .Where(x => x.Languages.Any()).ToList()
                              select new EmployeeVM
                              {
                                  EmpId = e.EmployeeId,
@@ -68,7 +68,7 @@ namespace Demo2Mvc.Controllers
         public ActionResult GetEmployeesById(int id)
         {
             DemoDbContext db = new DemoDbContext();
-            var user = db.Employees.Include("Department").FirstOrDefault(x => x.EmployeeId == id);
+            var user = db.Employees.Include("Department").Include("Languages").FirstOrDefault(x => x.EmployeeId == id);
             var emp = new EmployeeDepartment
             {
                 EmployeeId = user.EmployeeId,
@@ -77,7 +77,8 @@ namespace Demo2Mvc.Controllers
                 FullName = user.FullName,
                 DepartmentName = user.Department?.DepartmentName ?? "N/A",
                 Location = user.Department?.Location ?? "N/A",
-                DepartmentId = user.DepartmentId
+                DepartmentId = user.DepartmentId,
+                LanguageIds = user.Languages?.Select(x => x.LanguageId).ToArray() ?? new int[0]
             };
             return Json(emp, JsonRequestBehavior.AllowGet);
         }
@@ -105,7 +106,7 @@ namespace Demo2Mvc.Controllers
                 DepartmentId = model.DepartmentId
             };
 
-            if(model.LanguageIds.Any())
+            if (model.LanguageIds.Any())
             {
                 var languages = db.Languages.Where(x => model.LanguageIds.Contains(x.LanguageId)).ToList();
                 emp.Languages.AddRange(languages);
@@ -126,7 +127,13 @@ namespace Demo2Mvc.Controllers
             employee.EmailAddress = model.EmailAddress;
             employee.Age = model.Age; ;
             employee.DepartmentId = model.DepartmentId;
-            
+            employee.Languages.Clear();
+
+            if (model.LanguageIds.Any())
+            {
+                var languages = db.Languages.Where(x => model.LanguageIds.Contains(x.LanguageId)).ToList();
+                employee.Languages.AddRange(languages);
+            }
 
             db.Entry(employee).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();

@@ -124,7 +124,7 @@
 
             $('#employeeFormModal').on('hidden.bs.modal', function () {
                 console.log("modal Hidden!");
-                $('input,select').val('');
+                $('input:not([type="checkbox"]),select').val('');
                 $('input[type="checkbox"]').prop('checked', false);
                 $('#employeeFormModal').find('.modal-title').html('ADD EMPLOYEE');
             });
@@ -146,6 +146,14 @@
                         $('input[name="employeeId"]').val(result.EmployeeId);
                         $('#employeeFormModal').find('.modal-title').html('UPDATE EMPLOYEE');
                         $('#employeeFormModal').modal('show');
+
+                        for (var i = 0; i < result.LanguageIds.length; i++) {
+                            $('input[type="checkbox"]').each(function (e, el) {
+                                if ($(el).val() == result.LanguageIds[i]) {
+                                    $(el).prop('checked', true);
+                                }
+                            })
+                        }
                     },
                     error: function (error) {
                         console.log(error);

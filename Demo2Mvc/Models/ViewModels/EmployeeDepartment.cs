@@ -15,5 +15,7 @@ namespace Demo2Mvc.Models.ViewModels
         public string DepartmentName { get; set; }
         public string Location { get; set; }
         public int? DepartmentId { get; set; }
+
+        public int[] LanguageIds { get; set; }
     }
 }
