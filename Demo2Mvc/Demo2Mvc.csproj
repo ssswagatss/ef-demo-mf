@@ -374,11 +374,16 @@
     <Compile Include="Migrations\202002260934366_AddsDeptClass_Migration.designer.cs">
       <DependentUpon>202002260934366_AddsDeptClass_Migration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003130624180_Adds_Language_Class.cs" />
+    <Compile Include="Migrations\202003130624180_Adds_Language_Class.designer.cs">
+      <DependentUpon>202003130624180_Adds_Language_Class.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DemoDbContext.cs" />
     <Compile Include="Models\DemoModel.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Language.cs" />
     <Compile Include="Models\ViewModels\AddEmpVM.cs" />
     <Compile Include="Models\ViewModels\DemoVm.cs" />
     <Compile Include="Models\ViewModels\EditCustomEmployeeViewModel.cs" />
@@ -423,6 +428,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002260934366_AddsDeptClass_Migration.resx">
       <DependentUpon>202002260934366_AddsDeptClass_Migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003130624180_Adds_Language_Class.resx">
+      <DependentUpon>202003130624180_Adds_Language_Class.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
