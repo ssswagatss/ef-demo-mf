@@ -7,6 +7,23 @@ namespace Demo2Mvc.Controllers
 {
     public class EmployeeController : Controller
     {
+        public ActionResult All()
+        {
+            DemoDbContext db = new DemoDbContext();
+            var employees = (from e in db.Employees.Include("Department").Include("Languages")
+                                                    .Where(x=>x.Languages.Any()).ToList()
+                             select new EmployeeVM
+                             {
+                                 EmpId = e.EmployeeId,
+                                 EmployeeName = e.FullName,
+                                 DeptId = e.Department?.DepartmentId,
+                                 DepartmentName = e.Department?.DepartmentName,
+                                 Languages = e.Languages.Select(x => x.LanguageName).ToArray()
+                             });
+            return View(employees);
+
+        }
+
         // GET: Employee
         public ActionResult Index()
         {

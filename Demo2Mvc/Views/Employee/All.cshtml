@@ -1,0 +1,13 @@
+﻿@model  IEnumerable<Demo2Mvc.Models.ViewModels.EmployeeVM>
+@{
+    ViewBag.Title = "All";
+}
+
+@foreach (var e in Model)
+{
+    <p>@e.EmployeeName</p>
+    <p>@e.DepartmentName</p>
+    <p>@string.Join(", ",e.Languages)</p>
+    <hr />
+}
+

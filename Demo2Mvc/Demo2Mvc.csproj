@@ -392,6 +392,7 @@
     <Compile Include="Models\ViewModels\DemoVm.cs" />
     <Compile Include="Models\ViewModels\EditCustomEmployeeViewModel.cs" />
     <Compile Include="Models\ViewModels\EmployeeDepartment.cs" />
+    <Compile Include="Models\ViewModels\EmployeeVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -407,6 +408,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Demo\Abc.cshtml" />
     <Content Include="Views\Demo\Xyz.cshtml" />
+    <Content Include="Views\Employee\All.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
