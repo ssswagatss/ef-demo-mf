@@ -29,6 +29,9 @@ namespace Demo2Mvc.Controllers
         {
             DemoDbContext db = new DemoDbContext();
 
+
+
+
             //var data = (from user in db.Employees.Include("Department").ToList()
             //            select new EmployeeDepartment
             //            {
@@ -42,6 +45,7 @@ namespace Demo2Mvc.Controllers
 
             var departments = db.Departments.ToList();
             ViewBag.Departments = departments;
+            ViewBag.Languages = db.Languages.ToList();
             return View("~/Views/Employee/MyIndex.cshtml");
         }
 
@@ -100,6 +104,14 @@ namespace Demo2Mvc.Controllers
                 Age = model.Age,
                 DepartmentId = model.DepartmentId
             };
+
+            if(model.LanguageIds.Any())
+            {
+                var languages = db.Languages.Where(x => model.LanguageIds.Contains(x.LanguageId)).ToList();
+                emp.Languages.AddRange(languages);
+            }
+
+
             db.Employees.Add(emp);
             db.SaveChanges();
             return Json("Success");
@@ -108,12 +120,13 @@ namespace Demo2Mvc.Controllers
         public ActionResult UpdateEmployee(int employeeId, AddEmpVM model)
         {
             DemoDbContext db = new DemoDbContext();
-            var employee = db.Employees.FirstOrDefault(x => x.EmployeeId == employeeId);
+            var employee = db.Employees.Include("Languages").FirstOrDefault(x => x.EmployeeId == employeeId);
 
             employee.FullName = model.EmployeeName;
             employee.EmailAddress = model.EmailAddress;
             employee.Age = model.Age; ;
             employee.DepartmentId = model.DepartmentId;
+            
 
             db.Entry(employee).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();

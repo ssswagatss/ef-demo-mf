@@ -10,6 +10,10 @@ namespace Demo2Mvc.Models
 {
     public class Employee
     {
+        public Employee()
+        {
+            Languages = new List<Language>();
+        }
         //[Key]
         public int EmployeeId { get; set; }
 

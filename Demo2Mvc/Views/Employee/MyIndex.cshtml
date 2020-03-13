@@ -1,5 +1,6 @@
 ﻿@{
     List<Demo2Mvc.Models.Department> depts = ViewBag.Departments;
+    List<Demo2Mvc.Models.Language> languages = ViewBag.Languages;
 }
 <button class="btn btn-default btn-primary pull-right" data-toggle="modal" data-target="#employeeFormModal">Create New</button>
 
@@ -54,6 +55,16 @@
                                         <option value="@d.DepartmentId">@d.DepartmentName</option>
                                     }
                                 </select>
+                            </div>
+
+                            <div class="form-group">
+
+                                @foreach (var c in languages)
+                                {
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="@c.LanguageId">@c.LanguageName</label>
+                                    </div>
+                                }
                             </div>
                         </form>
                     </div>
@@ -114,6 +125,7 @@
             $('#employeeFormModal').on('hidden.bs.modal', function () {
                 console.log("modal Hidden!");
                 $('input,select').val('');
+                $('input[type="checkbox"]').prop('checked', false);
                 $('#employeeFormModal').find('.modal-title').html('ADD EMPLOYEE');
             });
 
@@ -155,8 +167,13 @@
                     "EmailAddress": $('input[name="emailAddress"]').val(),
                     'Age': $('input[name="age"]').val(),
                     "DepartmentId": $('select[name="departmentId"]').val(),
-                    "EmployeeId": $('input[name="employeeId"]').val()
+                    "EmployeeId": $('input[name="employeeId"]').val(),
+                    "LanguageIds": []
                 };
+
+                $('input[type="checkbox"]:checked').each(function (e, el) {
+                    formData.LanguageIds.push($(el).val());
+                })
                 $.ajax({
                     url: url,
                     method: "POST",
