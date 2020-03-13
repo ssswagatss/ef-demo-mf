@@ -26,5 +26,8 @@ namespace Demo2Mvc.Models
 
         [ForeignKey("DepartmentId")]
         public virtual Department Department { get; set; }
+
+
+        public virtual List<Language> Languages { get; set; }
     }
 }

@@ -12,5 +12,7 @@ namespace Demo2Mvc.Models
         [Key]
         public int LanguageId { get; set; }
         public string LanguageName { get; set; }
+
+        public virtual List<Employee> Employees { get; set; }
     }
 }

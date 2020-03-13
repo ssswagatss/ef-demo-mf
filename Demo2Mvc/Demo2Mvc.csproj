@@ -378,6 +378,10 @@
     <Compile Include="Migrations\202003130624180_Adds_Language_Class.designer.cs">
       <DependentUpon>202003130624180_Adds_Language_Class.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003130630391_adds_many_to_many_relations.cs" />
+    <Compile Include="Migrations\202003130630391_adds_many_to_many_relations.designer.cs">
+      <DependentUpon>202003130630391_adds_many_to_many_relations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DemoDbContext.cs" />
     <Compile Include="Models\DemoModel.cs" />
@@ -431,6 +435,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003130624180_Adds_Language_Class.resx">
       <DependentUpon>202003130624180_Adds_Language_Class.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003130630391_adds_many_to_many_relations.resx">
+      <DependentUpon>202003130630391_adds_many_to_many_relations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
